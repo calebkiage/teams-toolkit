@@ -511,6 +511,15 @@ export class ActionStartOptions {
       data: TemplateNames.DeclarativeAgentWithExistingAction,
     };
   }
+
+  static typeSpec(): OptionItem {
+    return {
+      id: "type-spec",
+      label: getLocalizedString("core.createProjectQuestion.apiPlugin.typeSpec.label"),
+      detail: getLocalizedString("core.createProjectQuestion.apiPlugin.typeSpec.detail"),
+      data: TemplateNames.DeclarativeAgentWithTypeSpec,
+    };
+  }
 }
 
 export class ApiAuthOptions {
@@ -553,6 +562,34 @@ export class ApiAuthOptions {
       id: "oauth",
       label: "OAuth",
       data: TemplateNames.DeclarativeAgentWithActionFromScratchOAuth,
+    };
+  }
+}
+
+export class DATypeSpecStartOptions {
+  static fromScratch(): OptionItem {
+    return {
+      id: "from-scratch",
+      label: getLocalizedString(
+        "core.createProjectQuestion.capability.daTypeSpecStartOptions.fromScratch.label"
+      ),
+      detail: getLocalizedString(
+        "core.createProjectQuestion.capability.daTypeSpecStartOptions.fromScratch.detail"
+      ),
+      data: TemplateNames.DeclarativeAgentWithTypeSpec,
+    };
+  }
+
+  static fromExistingApiSpec(): OptionItem {
+    return {
+      id: "api-spec",
+      label: getLocalizedString(
+        "core.createProjectQuestion.capability.daTypeSpecStartOptions.fromExistingApiSpec.label"
+      ),
+      detail: getLocalizedString(
+        "core.createProjectQuestion.capability.daTypeSpecStartOptions.fromExistingApiSpec.detail"
+      ),
+      data: TemplateNames.DeclarativeAgentWithActionFromExistingApiSpec,
     };
   }
 }

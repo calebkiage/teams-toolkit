@@ -9,6 +9,7 @@ import { MessageExtensionWithExistingApiSpecGenerator } from "./openApiSpec/mess
 import { SsrTabGenerator } from "./other/ssrTabGenerator";
 import { TdpGenerator } from "./other/tdpGenerator";
 import { SPFxGeneratorImport, SPFxGeneratorNew } from "./spfx/spfxGenerator";
+import { TypeSpecGenerator } from "./typeSpec/generator";
 
 // When multiple generators are activated, only the top one will be executed.
 export const Generators = [
@@ -22,4 +23,5 @@ export const Generators = [
   new CustomEngineAgentWithExistingApiSpecGenerator(),
   new MessageExtensionWithExistingApiSpecGenerator(),
   new DeclarativeAgentGenerator(),
+  new TypeSpecGenerator(),
 ];

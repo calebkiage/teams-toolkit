@@ -1,0 +1,11 @@
+emit:
+  - "@typespec/openapi3"
+  - "@microsoft/typespec-copilot-skills"
+options:
+  "@typespec/openapi3":
+    emitter-output-dir: "{project-root}/.generated/openapi"
+    file-type: json
+  "@microsoft/typespec-copilot-skills":
+    emitter-output-dir: "{project-root}/.generated"
+    output-file: declarativeAgent.json
+    file-type: json

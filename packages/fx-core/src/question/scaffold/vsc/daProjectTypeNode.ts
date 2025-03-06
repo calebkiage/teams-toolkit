@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Inputs, IQTreeNode } from "@microsoft/teamsfx-api";
-import { featureFlagManager, FeatureFlags } from "../../../common/featureFlags";
+import { featureFlagManager, FeatureFlagName, FeatureFlags } from "../../../common/featureFlags";
 import { getLocalizedString } from "../../../common/localizeUtils";
 import { QuestionNames } from "../../constants";
 import { pluginApiSpecQuestion, pluginManifestQuestion } from "../../create";
@@ -10,6 +10,7 @@ import {
   ActionStartOptions,
   ApiAuthOptions,
   DACapabilityOptions,
+  DATypeSpecStartOptions,
   setTemplateName,
 } from "./CapabilityOptions";
 import { ProjectTypeOptions } from "./ProjectTypeOptions";
@@ -59,6 +60,9 @@ export function daProjectTypeNode(
                 ActionStartOptions.newApi(),
                 ActionStartOptions.apiSpec(),
                 ActionStartOptions.existingPlugin(),
+                ...(featureFlagManager.getBooleanValue(FeatureFlags.TypeSpec)
+                  ? [ActionStartOptions.typeSpec()]
+                  : []),
               ],
               default: ActionStartOptions.newApi().id,
               onDidSelection: setTemplateName,
@@ -103,6 +107,20 @@ export function daProjectTypeNode(
                   },
                 ],
               },
+              // {
+              //   condition: { equals: ActionStartOptions.typeSpec().id },
+              //   data: {
+              //     type: "singleSelect",
+              //     name: QuestionNames.TypeSpecProjectType,
+              //     title: getLocalizedString("core.createProjectQuestion.typeSpecProjectType.title"),
+              //     staticOptions: [
+              //       DATypeSpecStartOptions.fromScratch(),
+              //       DATypeSpecStartOptions.fromExistingApiSpec()
+              //     ],
+              //     default: DATypeSpecStartOptions.fromScratch().id,
+              //     onDidSelection: setTemplateName,
+              //   }
+              // }
             ],
           },
         ],

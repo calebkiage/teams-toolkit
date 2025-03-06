@@ -81,7 +81,8 @@
           { "$ref": "#/definitions/apiKeyUpdate"},
           { "$ref": "#/definitions/oauthRegister"},
           { "$ref": "#/definitions/oauthUpdate"},
-          { "$ref": "#/definitions/shareToOthers"}
+          { "$ref": "#/definitions/shareToOthers"},
+          { "$ref": "#/definitions/typeSpecCompile"}
         ]
       }
     },
@@ -1906,6 +1907,46 @@
             "clientSecret": {
               "type": "string",
               "description": "The client secret of OAuth registration."
+            }
+          }
+        }
+      }
+    },
+    "typeSpecCompile": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Compile TypeSpec project",
+      "required": ["uses", "with"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "An optional name of this action."
+        },
+        "env": {
+          "type": "object",
+          "description": "Define environment variables for this action.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "uses": {
+          "type": "string",
+          "description": "Update Microsoft Entra application based on the given Microsoft Entra application manifest. If the manifest uses AAD_APP_ACCESS_AS_USER_PERMISSION_ID and the environment variable is empty, this action will generate a random id and output it. Refer to https://aka.ms/teamsfx-actions/aadapp-update for more details.",
+          "const": "typeSpec/compile"
+        },
+        "with": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Parameters for this action",
+          "required": ["path"],
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "Path of main.tsp file."
+            },
+            "manifestFilePath": {
+              "type": "string",
+              "description": "Path of manifest file."
             }
           }
         }
