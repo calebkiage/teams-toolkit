@@ -1,0 +1,64 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+/**
+ * @author Ivan Chen <v-ivanchen@microsoft.com>
+ */
+import * as path from "path";
+import { Timeout } from "../../utils/constants";
+import { RemoteDebugTestContext } from "../remotedebug/remotedebugContext";
+import {
+  execCommandIfExist,
+  createNewProject,
+} from "../../utils/vscodeOperation";
+import { it } from "../../utils/it";
+
+describe("Remote debug Tests", function () {
+  this.timeout(Timeout.testAzureCase);
+  let remoteDebugTestContext: RemoteDebugTestContext;
+  let testRootFolder: string;
+  let appName: string;
+  const appNameCopySuffix = "copy";
+  let newAppFolderName: string;
+  let projectPath: string;
+
+  beforeEach(async function () {
+    // ensure workbench is ready
+    this.timeout(Timeout.prepareTestCase);
+    remoteDebugTestContext = new RemoteDebugTestContext("bot");
+    testRootFolder = remoteDebugTestContext.testRootFolder;
+    appName = remoteDebugTestContext.appName;
+    newAppFolderName = appName + appNameCopySuffix;
+    projectPath = path.resolve(testRootFolder, newAppFolderName);
+    await remoteDebugTestContext.before();
+  });
+
+  afterEach(async function () {
+    this.timeout(Timeout.finishAzureTestCase);
+    await remoteDebugTestContext.after();
+
+    //Close the folder and cleanup local sample project
+    await execCommandIfExist("Workspaces: Close Workspace", Timeout.webView);
+    console.log(`[Successfully] start to clean up for ${projectPath}`);
+    await remoteDebugTestContext.cleanUp(
+      appName,
+      projectPath,
+      false,
+      true,
+      false
+    );
+  });
+
+  it(
+    "[auto] Create Project in exist Project Folder Test",
+    {
+      testPlanCaseId: "XXXXXX",
+      author: "v-ivanchen@microsoft.com",
+    },
+    async function () {
+      await createNewProject("bot", appName);
+      // create a project in project folder
+      await createNewProject("bot", `new-${appName}`);
+    }
+  );
+});
